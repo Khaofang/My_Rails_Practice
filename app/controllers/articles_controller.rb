@@ -1,21 +1,33 @@
 class ArticlesController < ApplicationController
 
-  http_basic_authenticate_with name: "dhh", password: "secret", except: [:index, :show]
+  http_basic_authenticate_with name: "123", password: "123", except: [:index, :show]
 
   def index
     @articles = Article.all
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
   end
 
   def show
     @article = Article.find(params[:id])
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
   end
 
   def new
     @article = Article.new
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
   end
 
   def edit
     @article = Article.find(params[:id])
+    if request.headers['X-PJAX']
+      render :layout => false
+    end
   end
 
   def create

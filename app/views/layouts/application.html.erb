@@ -1,17 +1,24 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Blog</title>
+    <title>PJAX TESTING</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
+    <script type="text/javascript">
+      $(function () {
+        $(document).pjax('a', '[data-pjax-container]')
+        $(document).on('submit', 'form[data-pjax-container]', function(event) {
+          $.pjax.submit(event, '[data-pjax-container]]')
+        })
+      })
+    </script>
   </head>
 
   <body>
     <%= render 'layouts/header' %>
-    <b>Time: <%= Time.now %></b>
     <div data-pjax-container>
       <%= yield %>
     </div>
