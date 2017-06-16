@@ -34,8 +34,10 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.save
+      logger.info "Success"
       redirect_to @article
     else
+      logger.info "Failed to create new article"
       render 'new'
     end
   end

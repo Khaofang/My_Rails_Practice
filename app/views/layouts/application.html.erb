@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>PJAX TESTING</title>
+    <title>My Blog</title>
     <%= csrf_meta_tags %>
 
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
@@ -9,11 +9,8 @@
 
     <script type="text/javascript">
       $(function () {
-        $(document).pjax('a', '[data-pjax-container]')
-        $(document).on('submit', 'form[data-pjax-container]', function(event) {
-          $.pjax.submit(event, '[data-pjax-container]]')
-        })
-      })
+        $(document).pjax('a', '[data-pjax-container]');
+      });
     </script>
   </head>
 
@@ -22,7 +19,5 @@
     <div data-pjax-container>
       <%= yield %>
     </div>
-    <%= render 'layouts/footer' %>
   </body>
-
 </html>
