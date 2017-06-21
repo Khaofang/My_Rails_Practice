@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>My Blog</title>
     <%= csrf_meta_tags %>
-
+    <%= display_meta_tags(default_meta_tags) %>
     <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <script type="text/javascript">
-      $(function () {
-        $(document).pjax('a', '[data-pjax-container]');
-      });
+      $(document).pjax('a', '[data-pjax-container]');
     </script>
   </head>
 
@@ -19,5 +16,6 @@
     <div data-pjax-container>
       <%= yield %>
     </div>
+    <%= render 'layouts/footer' %>
   </body>
 </html>

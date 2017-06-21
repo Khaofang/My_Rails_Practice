@@ -3,30 +3,38 @@ class ArticlesController < ApplicationController
   http_basic_authenticate_with name: "123", password: "123", except: [:index, :show]
 
   def index
+    @title = 'Listing Articles'
+    @description = 'All articles'
     @articles = Article.all
     if request.headers['X-PJAX']
-      render :layout => false
+      render :layout => 'pjax'
     end
   end
 
   def show
     @article = Article.find(params[:id])
+    @title = @article.title
+    @description = @article.text
     if request.headers['X-PJAX']
-      render :layout => false
+      render :layout => 'pjax'
     end
   end
 
   def new
+    @title = 'New Article'
+    @description = 'Create new article'
     @article = Article.new
     if request.headers['X-PJAX']
-      render :layout => false
+      render :layout => 'pjax'
     end
   end
 
   def edit
+    @title = 'Edit Article'
+    @description = 'Edit article: ' + @article.title
     @article = Article.find(params[:id])
     if request.headers['X-PJAX']
-      render :layout => false
+      render :layout => 'pjax'
     end
   end
 
@@ -34,10 +42,8 @@ class ArticlesController < ApplicationController
     @article = Article.new(article_params)
 
     if @article.save
-      logger.info "Success"
       redirect_to @article
     else
-      logger.info "Failed to create new article"
       render 'new'
     end
   end
