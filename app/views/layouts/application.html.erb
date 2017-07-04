@@ -7,54 +7,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
 
     <script type="text/javascript">
-      $(document).pjax('a', '[data-pjax-container]');
-
-      $(document).on('pjax:complete', function(event) {
-        var text = $(document).find('noscript[meta-tags]').text();
-        text = text.replace('\n', '');
-        text = text.replace('\r', '');
-        var $noscript = $.parseHTML(text);
-        $noscript.forEach(function(element) {
-          var element_attr = $(element).attr();
-          var element_var = Object.keys($(element).attr());
-          var selector = element.tagName;
-          element_var.forEach(function(v) {
-            if (v !== 'content' && v !== 'href')
-            selector = selector + '[' + v + '="' + element_attr[v] + '"]';
-          });
-          var relate = $('head').find(selector);
-          if (relate.length > 0)
-            replaceSameTag(relate[0], element);
-          else
-            $('head').append(element);
-        });
-      });
-
-      (function(old) {
-        $.fn.attr = function() {
-          if (arguments.length === 0) {
-            if (this.length === 0)
-              return null;
-            var obj = {};
-            $.each(this[0].attributes, function() {
-              if (this.specified)
-                obj[this.name] = this.value;
-            });
-            return obj;
-          }
-          return old.apply(this, arguments);
-        };
-      })($.fn.attr);
-
-      function replaceSameTag(tag, element) {
-        if ($(element).text() !== '' && $(tag).text() != '')
-          $(tag).text($(element).text());
-        var element_attr = $(element).attr()
-        var element_var = Object.keys(element_attr);
-        element_var.forEach(function(s) {
-          $(tag).attr(s, element_attr[s]);
-        });
-      }
+      let pjax_manager = new PJAXManager();
     </script>
   </head>
 
@@ -62,6 +15,13 @@
     <%= render 'layouts/header' %>
     <div data-pjax-container>
       <%= yield %>
+      <div>
+        <a data-glazziq-container='#glazziq-replace' href="/articles/new">XXXX</a>
+        <a data-glazziq-container href="https://www.google.com">Go to Google</a>
+      </div>
+      <div id="glazziq-replace">
+        <h1>Hello</h1>
+      </div>
     </div>
     <%= render 'layouts/footer' %>
   </body>
